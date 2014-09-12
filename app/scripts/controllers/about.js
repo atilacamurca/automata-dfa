@@ -8,10 +8,5 @@
  * Controller of the automataDfaApp
  */
 angular.module('automataDfaApp')
-  .controller('AboutCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('AboutCtrl', ['$scope', function($scope) {}
+  ]);

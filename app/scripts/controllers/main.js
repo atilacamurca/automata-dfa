@@ -9,9 +9,9 @@
  */
 angular.module('automataDfaApp')
     .controller('MainCtrl', ['$scope', 'DFA', function ($scope, DFA) {
-        var sTransitions = "[]";
-        $scope.sFinalStates = "[\"s2\"]";
-        $scope.messages = "";
+        var sTransitions = '[]';
+        $scope.sFinalStates = '[\"s2\"]';
+        $scope.messages = '';
 
         $scope.delta = [{
             'state': 's1',
@@ -45,15 +45,15 @@ angular.module('automataDfaApp')
             dfa.finalStates = $scope.finalStates;
             dfa.delta = $scope.delta;
 
-            $scope.messages = ""; // clear messages
+            $scope.messages = ''; // clear messages
             var strings = $scope.str.split('\n');
             var len = strings.length;
             for (var i = 0; i < len; i++) {
                 var passed = dfa.processString(strings[i]);
 
                 var s = strings[i];
-                if (s === "") {
-                    s = "&epsilon;";
+                if (s === '') {
+                    s = '&epsilon;';
                 }
                 if (passed) {
                     console.log('string aceita.');
@@ -70,7 +70,7 @@ angular.module('automataDfaApp')
             _editor.setFontSize('11pt');
             _session.setValue(JSON.stringify($scope.delta, undefined, 4));
 
-            _session.on("change", function() {
+            _session.on('change', function() {
                 sTransitions = _session.getValue();
             });
         };
