@@ -24,6 +24,8 @@
     "ace": false,
     "BuildAutomata": false,
     "Regex": false,
-    "sprintf": false
+    "sprintf": false,
+    "Set": false,
+    "Dictionary": false
   }
 }

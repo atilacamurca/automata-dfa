@@ -126,9 +126,49 @@ Regex.prototype.handleCharInLocalOp = function (char, previous) {
 };
 
 Regex.prototype.addOperatorToStack = function (char) {
-    // TODO
+    var len = this.stack.length;
+    while (true) {
+        if (len === 0) {
+            break;
+        }
+
+        var top = this.stack[len - 1]; // apenas obtem o valor do topo para testá-lo
+        if (top === operators.open_b) {
+            break;
+        }
+
+        if (top === char || top === operators.dot) {
+            var op = this.statck.pop();
+            this.processOperator(op);
+        } else {
+            break;
+        }
+    }
+
+    this.stack.push(char);
 };
 
-Regex.prototype.processOperator = function (char) {
-    // TODO
+Regex.prototype.processOperator = function (operator) {
+    var len = this.automata.length;
+    if (len === 0) {
+        throw sprintf('Erro ao processar operador "%s". Pilha vazia.', operator);
+    }
+
+    if (operator === operators.star) {
+        var item = this.automata.pop();
+        this.automata.push(BuildAutomata.starStruct(item));
+    } else if (_.contains(this.local_operators, operator)) {
+        if (len < 2) {
+            throw sprintf('Erro ao processar operador "%s". Operandos inadequados.', operator);
+        }
+
+        var op_1 = this.automata.pop();
+        var op_2 = this.automata.pop();
+
+        if (operator === operators.plus) {
+            this.automata.push(BuildAutomata.plusStruct(op_2, op_1));
+        } else if (operator === operators.dot) {
+            this.automata.push(BuildAutomata.dotStruct(op_2, op_1));
+        }
+    }
 };
