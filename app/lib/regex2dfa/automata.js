@@ -25,7 +25,7 @@ Automata.prototype.setStartState = function (state) {
     this.states.add(state);
 };
 
-Automata.prototype.setFinalStates = function (states) {
+Automata.prototype.addFinalStates = function (states) {
     if (_.isNumber(states)) {
         states = [states];
     }
@@ -126,6 +126,33 @@ Automata.prototype.getEClose = function (findState) {
         }
     }
     return allStates;
+};
+
+Automata.prototype.newBuildFromNumber = function (startNum) {
+    var translations = new Dictionary();
+    var keys = this.states.keys();
+    var len = keys.length;
+    for (var i = 0; i < len; i++) {
+        translations.add(i, startNum);
+        startNum += 1;
+    }
+
+    var rebuild = new Automata(this.language);
+    rebuild.setStartState(translations.get(this.startState));
+    rebuild.addFinalStates(translations.get(this.finalStates[0]));
+    var fromState = this.transitions.keys();
+    var toStates = this.transitions.values();
+    var lenToStates = toStates.length;
+    for (var j = 0; j < lenToStates; j++) {
+        var item = toStates[j];
+        var keysState = item.keys();
+        var lenKeys = keysState.length;
+        for (var k = 0; k < lenKeys; k++) {
+            var state = keysState[k];
+            rebuild.addTransition(translations[fromState[j]], translations[state], toStates.get(state));
+        }
+    }
+    return [rebuild, startNum];
 };
 
 Automata.prototype.display = function () {
