@@ -37,3 +37,44 @@ Automata.prototype.setFinalStates = function (states) {
         }
     }
 };
+
+Automata.prototype.addTransition = function (fromState, toState, input) {
+    if (_.isString(input)) {
+        input = new Set([input]);
+    }
+
+    this.states.add(fromState);
+    this.states.add(toState);
+
+    if (this.transitions.has(fromState)) {
+        var curFromState = this.transitions.get(fromState);
+        if (curFromState.has(toState)) {
+            // curFromState.get(toState).union(input);
+            var curToState = curFromState.get(toState);
+            curToState.union(input);
+        } else{
+            curFromState.add(toState, input);
+            //this.transitions.get(fromState).curFromState.add(toState, input);
+        }
+    } else {
+        this.transitions.add(fromState, new Dictionary(toState, input));
+    }
+};
+
+Automata.prototype.display = function () {
+    console.log('states:', this.states);
+    console.log('start state:', this.startState);
+    console.log('final states:', this.finalStates);
+    console.log('transitions:', this.transitions);
+    /*var fromStates = this.transitions.keys();
+    var lenFromStates = fromStates.length;
+    for (var i = 0; i < lenFromStates; i++) {
+        console.log(this.transitions.get(fromStates[i]));
+        var toStates = fromStates[i].keys();
+        var lenToStates = toStates.length;
+        for (var j = 0; j < lenToStates; j++) {
+            console.log('    ', toStates[j]);
+        }
+        console.log(''); // new line
+    }*/
+};
