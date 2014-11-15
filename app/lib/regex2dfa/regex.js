@@ -21,13 +21,13 @@ function Regex(expression) {
     this.expression = expression;
     this.local_operators = [operators.plus, operators.dot];
     this.alphabet = regexAlphabet('A', '9');
+    this.stack = [];
+    this.automata = [];
 }
 
 Regex.prototype.buildNFA = function () {
-    var language = []; // deve se comportar como um set
-    this.stack = [];
-    this.automata = [];
-    var previous = '::e::'; // previous inicia como vazio (epsilon)
+    var language = []; // TODO: usar Set();
+    var previous = '::e::'; // Automata.epsilon(); // previous inicia como vazio (epsilon)
     var len = this.expression.length;
     for (var i = 0; i < len; i++) {
         var char = this.expression.charAt(i);
@@ -53,8 +53,8 @@ Regex.prototype.buildNFA = function () {
         previous = char;
     }
 
-    var stack_len = this.stack.length;
-    while (stack_len !== 0) {
+    //var stack_len = this.stack.length;
+    while (this.stack.length !== 0) {
         var op = this.stack.pop();
         this.processOperator(op);
     }
@@ -138,7 +138,7 @@ Regex.prototype.addOperatorToStack = function (char) {
         }
 
         if (top === char || top === operators.dot) {
-            var op = this.statck.pop();
+            var op = this.stack.pop();
             this.processOperator(op);
         } else {
             break;

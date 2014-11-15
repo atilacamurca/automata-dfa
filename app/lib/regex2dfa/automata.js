@@ -50,8 +50,9 @@ Automata.prototype.addTransition = function (fromState, toState, input) {
         var curFromState = this.transitions.get(fromState);
         if (curFromState.has(toState)) {
             // curFromState.get(toState).union(input);
-            var curToState = curFromState.get(toState);
-            curToState.union(input);
+            // var curToState = curFromState.get(toState);
+            // TODO: verificar método com cuidado
+            curFromState.add(toState, curFromState.get(toState).union(input));
         } else{
             curFromState.add(toState, input);
             //this.transitions.get(fromState).curFromState.add(toState, input);
@@ -133,7 +134,7 @@ Automata.prototype.newBuildFromNumber = function (startNum) {
     var keys = this.states.keys();
     var len = keys.length;
     for (var i = 0; i < len; i++) {
-        translations.add(i, startNum);
+        translations.add(keys[i], startNum);
         startNum += 1;
     }
 
@@ -149,10 +150,38 @@ Automata.prototype.newBuildFromNumber = function (startNum) {
         var lenKeys = keysState.length;
         for (var k = 0; k < lenKeys; k++) {
             var state = keysState[k];
-            rebuild.addTransition(translations[fromState[j]], translations[state], toStates.get(state));
+            rebuild.addTransition(translations.get(fromState[j]), translations.get(state), item.get(state));
         }
     }
     return [rebuild, startNum];
+};
+
+/**
+ * [newBuildFromEquivalentStates description]
+ * @param {Dictionary} equivalent [description]
+ * @param {Dictionary} pos        [description]
+ */
+Automata.prototype.newBuildFromEquivalentStates = function (equivalent, pos) {
+    var rebuild = new Automata(this.language);
+    var fromState = this.transitions.keys();
+    var toStates = this.transitions.values();
+    var lenToStates = toStates.length;
+    for (var j = 0; j < lenToStates; j++) {
+        var item = toStates[j];
+        var keysState = item.keys();
+        var lenKeys = keysState.length;
+        for (var k = 0; k < lenKeys; k++) {
+            var state = keysState[k];
+            rebuild.addTransition(pos.get(fromState[j]), pos.get(state), toStates.get(state));
+        }
+    }
+    rebuild.setStartState(pos.get(this.startState));
+    var lenFinalStates = this.finalStates.length;
+    for (var i = 0; i < lenFinalStates; i++) {
+        var s = this.finalStates[i];
+        rebuild.addFinalStates(pos.get(s));
+    }
+    return rebuild;
 };
 
 Automata.prototype.display = function () {

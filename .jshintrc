@@ -26,6 +26,7 @@
     "Regex": false,
     "sprintf": false,
     "Set": false,
-    "Dictionary": false
+    "Dictionary": false,
+    "Automata": false
   }
 }
