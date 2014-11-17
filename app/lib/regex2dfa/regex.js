@@ -26,16 +26,14 @@ function Regex(expression) {
 }
 
 Regex.prototype.buildNFA = function () {
-    var language = []; // TODO: usar Set();
+    var language = new Set();
     var previous = '::e::'; // Automata.epsilon(); // previous inicia como vazio (epsilon)
     var len = this.expression.length;
     for (var i = 0; i < len; i++) {
         var char = this.expression.charAt(i);
         if (_.contains(this.alphabet, char)) { // verifica se char está no alfabeto
             // adiciona na linguagem se já não existir
-            if (_.contains(language, char)) {
-                language.push(char);
-            }
+            language.add(char);
 
             this.handleCharInLanguage(char, previous);
         } else if (char === operators.open_b) { // verifica se char é "("
@@ -53,7 +51,6 @@ Regex.prototype.buildNFA = function () {
         previous = char;
     }
 
-    //var stack_len = this.stack.length;
     while (this.stack.length !== 0) {
         var op = this.stack.pop();
         this.processOperator(op);
@@ -126,8 +123,8 @@ Regex.prototype.handleCharInLocalOp = function (char, previous) {
 };
 
 Regex.prototype.addOperatorToStack = function (char) {
-    var len = this.stack.length;
     while (true) {
+        var len = this.stack.length;
         if (len === 0) {
             break;
         }

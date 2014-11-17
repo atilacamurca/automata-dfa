@@ -9,7 +9,7 @@ function BuildAutomata() {}
 BuildAutomata.basicStruct = function (char) {
     var state1 = 1;
     var state2 = 2;
-    var basic = new Automata(new Set(['0', '1']));
+    var basic = new Automata(new Set(['0', '1'])); // TODO: passar language como parâmetro
     basic.setStartState(state1);
     basic.addFinalStates(state2);
     basic.addTransition(state1, state2, char);

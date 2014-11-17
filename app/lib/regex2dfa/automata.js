@@ -49,13 +49,12 @@ Automata.prototype.addTransition = function (fromState, toState, input) {
     if (this.transitions.has(fromState)) {
         var curFromState = this.transitions.get(fromState);
         if (curFromState.has(toState)) {
-            // curFromState.get(toState).union(input);
-            // var curToState = curFromState.get(toState);
-            // TODO: verificar método com cuidado
             curFromState.add(toState, curFromState.get(toState).union(input));
+            this.transitions.remove(fromState);
+            this.transitions.add(fromState, curFromState);
         } else{
             curFromState.add(toState, input);
-            //this.transitions.get(fromState).curFromState.add(toState, input);
+            this.transitions.add(fromState, curFromState);
         }
     } else {
         this.transitions.add(fromState, new Dictionary(toState, input));
@@ -73,7 +72,7 @@ Automata.prototype.addTransitionDict = function (transitions) {
         var len = keys.length;
         for (var j = 0; j < len; j++) {
             // TODO verificar possíveis problemas com esse método!!!!!!!!!
-            this.addTransition(fromState[i], keys[j], state.get(keys[i]));
+            this.addTransition(fromState[i], keys[j], state.get(keys[j]));
         }
     }
 };
@@ -107,8 +106,8 @@ Automata.prototype.getEClose = function (findState) {
     var allStates = new Set();
     var states = new Set([findState]);
     var keys = states.keys();
-    var len = keys.length;
-    while (len !== 0) {
+    //var len = keys.length;
+    while (keys.length !== 0) {
         var state = states.pop();
         allStates.add(state);
         var trKeys = this.transitions.keys();
@@ -118,8 +117,8 @@ Automata.prototype.getEClose = function (findState) {
             for (var j = 0; j < lenValues; j++) {
                 var tns = trKeys[j];
                 var aux = values[j];
-                var setKeys = aux.keys();
-                if (setKeys.has(Automata.epsilon()) &&
+                //var setKeys = aux.keys();
+                if (aux.has(Automata.epsilon()) &&
                     ! _.contains(allStates, tns)) {
                     states.add(tns);
                 }
