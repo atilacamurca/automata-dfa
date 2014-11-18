@@ -44,7 +44,17 @@ DFA.prototype.buildDFA = function () {
             trStatesKeys = trStates.keys();
             trStatesKeysLen = trStatesKeys.length;
             if (trStatesKeysLen !== 0) {
-                // https://github.com/siddharthasahu/automata-from-regex/blob/master/AutomataTheory.py#L233
+                var values = allStates.values();
+                var toIndex = -1;
+                if (! trStatesKeys.isSubset(values)) {
+                    states.push([trStatesKeys, count]);
+                    allStates.add(count, trStates);
+                    toIndex = count;
+                    count += 1;
+                } else {
+                    // https://github.com/siddharthasahu/automata-from-regex/blob/master/AutomataTheory.py#L239
+                }
+                dfa.addTransition(fromIndex, toIndex, char);
             }
         }
     }

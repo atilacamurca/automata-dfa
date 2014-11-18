@@ -86,6 +86,8 @@ Automata.prototype.addTransitionDict = function (transitions) {
 Automata.prototype.getTransitions = function (state, key) {
     if (_.isNumber(state)) {
         state = [state];
+    } else if (state instanceof Set) {
+        state = state.keys();
     }
 
     var transitions = new Set();
