@@ -77,6 +77,12 @@ Automata.prototype.addTransitionDict = function (transitions) {
     }
 };
 
+/**
+ * [getTransitions description]
+ * @param {Array} state [description]
+ * @param {String} key   [description]
+ * @return {Set}
+ */
 Automata.prototype.getTransitions = function (state, key) {
     if (_.isNumber(state)) {
         state = [state];
@@ -102,6 +108,11 @@ Automata.prototype.getTransitions = function (state, key) {
     return transitions;
 };
 
+/**
+ * [getEClose description]
+ * @param {[type]} findState [description]
+ * @return {Set}
+ */
 Automata.prototype.getEClose = function (findState) {
     var allStates = new Set();
     var states = new Set([findState]);
