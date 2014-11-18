@@ -52,10 +52,27 @@ DFA.prototype.buildDFA = function () {
                     toIndex = count;
                     count += 1;
                 } else {
-                    // https://github.com/siddharthasahu/automata-from-regex/blob/master/AutomataTheory.py#L239
+                    var keys = allStates.keys();
+                    var lenValues = values.length;
+                    for (var k = 0; k < lenValues; k++) {
+                        var v = values[k];
+                        if (v.equals(trStates)) {
+                            toIndex = keys[k];
+                            break;
+                        }
+                    }
                 }
                 dfa.addTransition(fromIndex, toIndex, char);
             }
+        }
+    }
+
+    var keys2 = allStates.keys();
+    var values2 = allStates.values();
+    var lenKeys2 = keys2.length;
+    for (var m = 0; m < lenKeys2; m++) {
+        if (_.contains(values2, this.nfa.finalStates[0])) {
+            dfa.addFinalStates(values2);
         }
     }
 

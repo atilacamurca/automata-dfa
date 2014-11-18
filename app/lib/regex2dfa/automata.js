@@ -121,7 +121,7 @@ Automata.prototype.getEClose = function (findState) {
     var keys = states.keys();
     //var len = keys.length;
     while (keys.length !== 0) {
-        var state = states.pop();
+        var state = keys.pop();
         allStates.add(state);
         var trKeys = this.transitions.keys();
         if (_.contains(trKeys, state)) {
