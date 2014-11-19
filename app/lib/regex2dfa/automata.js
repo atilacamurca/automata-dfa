@@ -82,6 +82,8 @@ Automata.prototype.addTransitionDict = function (transitions) {
  * @param {Array} state [description]
  * @param {String} key   [description]
  * @return {Set}
+ * TODO: https://github.com/siddharthasahu/automata-from-regex/blob/master/AutomataTheory.py#L47
+ * Refazer este método.
  */
 Automata.prototype.getTransitions = function (state, key) {
     if (_.isNumber(state)) {
@@ -93,15 +95,15 @@ Automata.prototype.getTransitions = function (state, key) {
     var transitions = new Set();
     var len = state.length;
     for (var i = 0; i < len; i++) {
-        var st = state[i];
+        var st = state[i] + '';
         var keys = this.transitions.keys();
         if (_.contains(keys, st)) {
-            var values = this.transitions.values();
+            var values = this.transitions.get(st).keys();
             var lenValues = values.length;
             for (var j = 0; j < lenValues; j++) {
                 var tns = values[j];
-                var setKeys = tns.keys();
-                if (_.contains(setKeys, key)) {
+                //var setKeys = tns.keys();
+                if (_.contains(values, key)) {
                     transitions.add(tns);
                 }
             }

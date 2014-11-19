@@ -46,7 +46,7 @@ DFA.prototype.buildDFA = function () {
             if (trStatesKeysLen !== 0) {
                 var values = allStates.values();
                 var toIndex = -1;
-                if (! trStatesKeys.isSubset(values)) {
+                if (! trStates.isSubset(values)) {
                     states.push([trStatesKeys, count]);
                     allStates.add(count, trStates);
                     toIndex = count;
@@ -62,6 +62,7 @@ DFA.prototype.buildDFA = function () {
                         }
                     }
                 }
+                console.log('from:', fromIndex, ', to:', toIndex, ', char:', char);
                 dfa.addTransition(fromIndex, toIndex, char);
             }
         }
