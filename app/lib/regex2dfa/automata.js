@@ -98,12 +98,12 @@ Automata.prototype.getTransitions = function (state, key) {
         var st = state[i] + '';
         var keys = this.transitions.keys();
         if (_.contains(keys, st)) {
-            var values = this.transitions.get(st).keys();
-            var lenValues = values.length;
-            for (var j = 0; j < lenValues; j++) {
-                var tns = values[j];
-                //var setKeys = tns.keys();
-                if (_.contains(values, key)) {
+            var stKeys = this.transitions.get(st).keys();
+            var values = this.transitions.get(st);
+            var lenStKeys = stKeys.length;
+            for (var j = 0; j < lenStKeys; j++) {
+                var tns = stKeys[j];
+                if (values.get(tns).has(key)) {
                     transitions.add(tns);
                 }
             }
@@ -123,19 +123,21 @@ Automata.prototype.getEClose = function (findState) {
     var keys = states.keys();
     //var len = keys.length;
     while (keys.length !== 0) {
-        var state = keys.pop();
+        var state = keys.pop() + '';
         allStates.add(state);
         var trKeys = this.transitions.keys();
         if (_.contains(trKeys, state)) {
-            var values = this.transitions.values();
-            var lenValues = values.length;
-            for (var j = 0; j < lenValues; j++) {
-                var tns = trKeys[j];
-                var aux = values[j];
-                //var setKeys = aux.keys();
-                if (aux.has(Automata.epsilon()) &&
-                    ! _.contains(allStates, tns)) {
+            var stKeys = this.transitions.get(state).keys();
+            var lenStKeys = stKeys.length;
+            //var values = this.transitions.values();
+            var values = this.transitions.get(state);
+            //var lenValues = values.length;
+            for (var j = 0; j < lenStKeys; j++) {
+                var tns = stKeys[j];
+                if (values.get(tns).has(Automata.epsilon()) &&
+                    ! allStates.has(tns)) {
                     states.add(tns);
+                    keys = states.keys();
                 }
             }
         }

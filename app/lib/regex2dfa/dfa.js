@@ -14,6 +14,7 @@ DFA.prototype.buildDFA = function () {
     var eClose = new Dictionary();
     var count = 1;
     var initialState = this.nfa.getEClose(this.nfa.startState);
+    console.log(initialState);
     eClose.add(this.nfa.startState, initialState);
     var dfa = new Automata(this.nfa.language);
     dfa.setStartState(count);
@@ -39,6 +40,7 @@ DFA.prototype.buildDFA = function () {
                     eClose.add(s, this.nfa.getEClose(s));
                 }
                 trStates = trStates.union(eClose.get(s));
+                console.log(trStates);
             }
 
             trStatesKeys = trStates.keys();
@@ -46,6 +48,9 @@ DFA.prototype.buildDFA = function () {
             if (trStatesKeysLen !== 0) {
                 var values = allStates.values();
                 var toIndex = -1;
+
+                // values é um array de set, for em todos até achar
+
                 if (! trStates.isSubset(values)) {
                     states.push([trStatesKeys, count]);
                     allStates.add(count, trStates);
