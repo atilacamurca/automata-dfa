@@ -8,5 +8,6 @@
  * Controller of the automataDfaApp
  */
 angular.module('automataDfaApp')
-  .controller('AboutCtrl', ['$scope', function($scope) {}
-  ]);
+  .controller('AboutCtrl', ['$rootScope', function($rootScope) {
+    $rootScope.menu_active = 'about';
+  }]);

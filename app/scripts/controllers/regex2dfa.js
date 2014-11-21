@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('automataDfaApp')
-    .controller('Regex2DfaCtrl', ['$scope', function ($scope) {
+    .controller('Regex2DfaCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+        $rootScope.menu_active = 'r2d';
         $scope.string = '(01*1)*1';
         $scope.overview = '';
         $scope.str = '011\n\n01011\n11111\n00000\n1';
@@ -13,7 +14,7 @@ angular.module('automataDfaApp')
             regex.buildNFA();
             var dfa = new DFA(regex.nfa);
             dfa.buildDFA();
-            $scope.overview = dfa.dfa;
+            $scope.overview = dfa.dfa.overview();
 
             $scope.messages = ''; // clear messages
             var strings = $scope.str.split('\n');

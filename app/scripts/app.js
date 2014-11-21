@@ -35,4 +35,7 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+  }])
+  .run(['$rootScope', function ($rootScope) {
+    $rootScope.menu_active = 'home';
   }]);

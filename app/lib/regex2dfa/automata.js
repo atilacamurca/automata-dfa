@@ -200,6 +200,34 @@ Automata.prototype.newBuildFromEquivalentStates = function (equivalent, pos) {
     return rebuild;
 };
 
+Automata.prototype.overview = function () {
+    var text = '';
+    text += 'Language: ' + this.language.keys().join();
+    text += '\nStates: ' + this.states.keys().join();
+    text += '\nStart State: ' + this.startState;
+    text += '\nFinal States: ' + this.finalStates.join();
+    text += '\nTransitions:';
+
+    var keys = this.transitions.keys();
+    var len = keys.length;
+    for (var i = 0; i < len; i++) {
+        var fromState = keys[i];
+        var toStates = this.transitions.get(fromState);
+        var keysToStates = toStates.keys();
+        var lenKeysToStates = keysToStates.length;
+        for (var j = 0; j < lenKeysToStates; j++) {
+            var state = keysToStates[j];
+            var values = toStates.get(state).keys();
+            var lenValues = values.length;
+            for (var k = 0; k < lenValues; k++) {
+                var char = values[k];
+                text += '\n   ' + fromState + ' → ' + state + ' on ' + char;
+            }
+        }
+    }
+    return text;
+};
+
 Automata.prototype.display = function () {
     console.log('states:', this.states);
     console.log('start state:', this.startState);

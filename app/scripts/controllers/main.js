@@ -8,7 +8,8 @@
  * Controller of the automataDfaApp
  */
 angular.module('automataDfaApp')
-    .controller('MainCtrl', ['$scope', 'DFA', function ($scope, DFA) {
+    .controller('MainCtrl', ['$scope', 'DFA', '$rootScope', function ($scope, DFA, $rootScope) {
+        $rootScope.menu_active = 'home';
         var sTransitions = '[]';
         $scope.sFinalStates = '[\"s2\"]';
         $scope.messages = '';
