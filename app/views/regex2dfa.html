@@ -1,0 +1,50 @@
+<style>
+    .ace_editor { height: 300px; width: 500px; border: 1px solid #ddd; }
+</style>
+
+<div class="row">
+    <div class="col-md-7">
+        <h4>Regex 2 DFA</h4>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="control-label" for="">Regex</label>
+                    <input type="text" class="form-control" id="string" ng-model="string">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label class="control-label" for="">Automata overview</label>
+                    <div>{{overview}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button ng-click="parse()" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-cog"></i> Parse
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="">Strings</label>
+                    <textarea class="form-control" rows="6" ng-model="str"></textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Results</div>
+                    <div class="panel-body">
+                        <span ng-bind-html="messages"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

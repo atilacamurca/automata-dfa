@@ -28,6 +28,10 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/regex2dfa', {
+          templateUrl: 'views/regex2dfa.html',
+          controller: 'Regex2DfaCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

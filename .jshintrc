@@ -28,6 +28,7 @@
     "sprintf": false,
     "Set": false,
     "Dictionary": false,
-    "Automata": false
+    "Automata": false,
+    "DFA": false
   }
 }
